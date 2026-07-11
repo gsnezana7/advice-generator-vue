@@ -88,3 +88,4 @@ I used an AI assistant as a collaborative peer and technical mentor during this 
 ## Author
 
 - GitHub - [Snezana](https://github.com/gsnezana7/)
+- Frontend Mentor - [@gsnezana7](https://www.frontendmentor.io/solutions/advice-generator-app-using-vue-3-and-fetch-R8uQoeg_Tf)

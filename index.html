@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="./images/favicon-32x32.png"
+    />
+
+    <title>Frontend Mentor | Advice generator app</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script type="module" defer src="main.js"></script>
+  </head>
+  <body>
+    <!-- Точка входа для Vue -->
+    <main id="app" class="advice-card">
+      <!-- Сюда Vue подставит id совета -->
+      <p class="advice-card__id">ADVICE #{{ adviceId }}</p>
+
+      <!-- Сюда Vue подставит текст совета -->
+      <h1 class="advice-card__quote">“{{ adviceText }}”</h1>
+
+      <!-- Картинка-разделитель из архива -->
+      <div class="advice-card__divider">
+        <img src="./images/pattern-divider-desktop.svg" alt="divider" />
+      </div>
+
+      <!-- :class говорит Vue динамически подставлять класс, если isLoading равен true -->
+      <button
+        :class="['advice-card__dice-btn', { 'advice-card__dice-btn--loading': isLoading }]"
+        @click="fetchAdvice"
+        :disabled="isLoading"
+      >
+        <img src="./images/icon-dice.svg" alt="dice" />
+      </button>
+    </main>
+    <footer class="attribution">
+      Challenge by
+      <a href="https://www.frontendmentor.io?ref=challenge" target="_blank"
+        >Frontend Mentor</a
+      >. Coded by <a href="https://github.com" target="_blank">Snezana</a>.
+    </footer>
+  </body>
+</html>

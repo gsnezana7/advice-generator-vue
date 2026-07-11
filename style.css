@@ -1,0 +1,183 @@
+/* Подключаем шрифт Manrope с Google Fonts */
+@import url('https://googleapis.com');
+
+:root {
+  /* Цвета из дизайн-гайда */
+  --light-cyan: hsl(193, 38%, 86%);
+  --neon-green: hsl(150, 100%, 66%);
+  --grayish-blue: hsl(217, 19%, 38%);
+  --dark-grayish-blue: hsl(217, 19%, 24%);
+  --dark-blue: hsl(218, 23%, 16%);
+
+  --font-main: 'Manrope', sans-serif;
+}
+
+/* Базовый сброс */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-main);
+  background-color: var(--dark-blue);
+  color: var(--light-cyan);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 1rem;
+}
+
+
+/* Контейнер карточки (стили для мобильных) */
+.advice-card {
+  background-color: var(--dark-grayish-blue); /* Чуть более светлый синий */
+  width: 100%;
+  max-width: 343px; /* Оптимальная ширина под экран мобильного (375px) */
+  padding: 2.5rem 1.5rem;
+  border-radius: 12px;
+  position: relative; /* Нужно, чтобы абсолютно спозиционировать кнопку снизу */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+/* Номер совета */
+.advice-card__id {
+  color: var(--neon-green);
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 3.5px;
+  margin-bottom: 1.5rem;
+}
+
+/* Текст цитаты */
+.advice-card__quote {
+  font-size: 1.5rem; /* Около 24px для мобилок, на десктопе сделаем 28px */
+  color: var(--light-cyan);
+  font-weight: 800;
+  line-height: 1.4;
+  margin-bottom: 1.5rem;
+}
+
+/* Полоса-разделитель */
+.advice-card__divider {
+  width: 100%;
+  margin-bottom: 1rem; /* Оставляем место для свисающей кнопки */
+}
+
+.advice-card__divider img {
+  width: 100%;
+  height: auto;
+}
+
+/* Кнопка-кубик */
+.advice-card__dice-btn {
+  width: 4rem;
+  height: 4rem;
+  background-color: var(--neon-green);
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  
+  /* Магия позиционирования: опускаем кнопку на самый нижний край карточки */
+  position: absolute;
+  bottom: -2rem; /* Сдвигаем вниз ровно на половину высоты кнопки (4rem / 2) */
+  left: 50%;
+  transform: translateX(-50%); /* Идеально центрируем по горизонтали */
+  
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+/* Эффект наведения (Hover) на кнопку — сделаем её неоново светящейся! */
+.advice-card__dice-btn:hover:not(:disabled) {
+  box-shadow: 0 0 30px var(--neon-green);
+}
+
+/* Дополнительно убираем стандартную обводку кнопок при фокусе */
+.advice-card__dice-btn:focus-visible {
+  outline: 2px solid var(--light-cyan);
+}
+
+/* 1. Описываем чистое вращение картинки вокруг своей оси на 360 градусов */
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* 2. Запускаем анимацию СТРОГО для картинки-иконки внутри загружающейся кнопки */
+.advice-card__dice-btn--loading img {
+  animation: spin 1s linear infinite;
+}
+
+
+
+/* ==========================================================================
+   АДАПТИВ ДЛЯ БОЛЬШИХ ЭКРАНОВ (Десктопы от 576px и выше)
+   ========================================================================== */
+@media (min-width: 576px) {
+  
+  .advice-card {
+    max-width: 540px; /* Увеличиваем ширину карточки для ПК */
+    padding: 3rem 3rem 4.5rem 3rem; /* Делаем просторные внутренние отступы */
+    border-radius: 15px; /* Чуть сильнее скругляем углы */
+  }
+
+  .advice-card__id {
+    font-size: 0.8rem;
+    margin-bottom: 2rem;
+  }
+
+  .advice-card__quote {
+    font-size: 28px; /* Точный размер из style-guide.md */
+    margin-bottom: 2.5rem;
+  }
+
+  .advice-card__divider {
+    margin-bottom: 0; /* Убираем лишний нижний отступ */
+  }
+
+  /* Трюк с автоматической подменой картинки-разделителя через CSS */
+  .advice-card__divider img {
+    content: url("./images/pattern-divider-desktop.svg");
+  }
+
+  /* Добавим легкий эффект увеличения кнопки при наведении для ПК */
+  .advice-card__dice-btn:hover:not(:disabled) {
+    transform: translateX(-50%) scale(1.05); /* Кнопка чуть увеличивается и сохраняет центрирование */
+  }
+}
+
+
+/* footer */
+    
+    .attribution {
+  position: absolute;
+  bottom: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 11px;
+  text-align: center;
+  color: var(--grayish-blue);
+  width: 100%;
+}
+
+.attribution a {
+  color: var(--neon-green);
+  text-decoration: none;
+}
+
+.attribution a:hover {
+  text-decoration: underline;
+}

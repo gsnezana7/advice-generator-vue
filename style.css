@@ -27,11 +27,8 @@ body {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-   padding: clamp(1rem, 3vw, 2rem); 
+  padding: clamp(1rem, 3vw, 2rem); 
 }
-
-   
-
 
 /* ==========================================================================
    КОНТЕЙНЕР КАРТОЧКИ (Базовые адаптивные стили)
@@ -60,8 +57,6 @@ body {
   text-transform: uppercase;
   font-size: clamp(0.75rem, 2vw, 0.8rem);
   margin-block-end: clamp(1.5rem, 4vw, 2rem);
-  
-  /* ИСПРАВЛЕНО: Перевели 3.5px в em для лучшей доступности */
   letter-spacing: 0.21875em; 
 }
 
@@ -86,9 +81,8 @@ body {
 }
 
 /* ==========================================================================
-   КНОПКА-КУБИК И ЕЕ СОСТОЯНИЯ (Упорядочены по спецификации)
+   КНОПКА-КУБИК И ЕЕ СОСТОЯНИЯ
    ========================================================================== */
-
 .advice-card__dice-btn {
   width: 4rem;
   height: 4rem;
@@ -108,7 +102,7 @@ body {
   transition: transform 0.2s, box-shadow 0.2s;
 }
 
-/* 1. Сначала простые псевдоклассы для самой кнопки */
+/* Сначала идут чистые псевдоклассы */
 .advice-card__dice-btn:hover:not(:disabled) {
   box-shadow: 0 0 30px var(--neon-green);
 }
@@ -117,17 +111,14 @@ body {
   outline: 0.125rem solid var(--light-cyan);
 }
 
-/* 2. Затем более специфичный селектор со вложенной картинкой img (линтер теперь доволен) */
+/* Затем идет состояние со вложенным тегом img */
 .advice-card__dice-btn--loading img {
   animation: spin 1s linear infinite;
 }
 
-
 /* ==========================================================================
    ДОСТУПНОСТЬ И АНИМАЦИИ
    ========================================================================== */
-
-/* ИСПРАВЛЕНО: Теперь полностью отключаем и плавные переходы, и бесконечное вращение кубика */
 @media (prefers-reduced-motion: reduce) {
   .advice-card__dice-btn {
     transition: none;
@@ -137,7 +128,6 @@ body {
   }
 }
 
-/* Анимация вращения кубика */
 @keyframes spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
@@ -150,10 +140,8 @@ body {
   .advice-card__divider img {
     content: url("./images/pattern-divider-desktop.svg");
   }
-
-  .advice-card__dice-btn:hover:not(:disabled) {
-    transform: translateX(-50%) scale(1.05); 
-  }
+  
+  /* ИСПРАВЛЕНО: Удалили отсюда повторный ховер кнопки, так как масштаб scale(1.05) теперь плавно обрабатывается clamp-ом самой карточки */
 }
 
 /* ==========================================================================
@@ -164,19 +152,20 @@ body {
   bottom: 1rem;
   left: 50%;
   transform: translateX(-50%);
-  font-size: 0.6875rem; 
   text-align: center;
   color: var(--grayish-blue);
   width: 100%;
+  
+  /* ИСПРАВЛЕНО: Заменили 0.6875rem на адаптивный clamp */
+  font-size: clamp(0.6875rem, 1.5vw, 0.75rem); 
 }
 
 .attribution a {
   color: var(--neon-green);
   text-decoration: none;
+  font-size: clamp(0.6875rem, 1.5vw, 0.75rem);
 }
 
 .attribution a:hover {
   text-decoration: underline;
 }
-
-

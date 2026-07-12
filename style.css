@@ -27,28 +27,26 @@ body {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  padding: 1rem;
+   padding: clamp(1rem, 3vw, 2rem); 
 }
+
+   
+
 
 /* ==========================================================================
    КОНТЕЙНЕР КАРТОЧКИ (Базовые адаптивные стили)
    ========================================================================== */
 .advice-card {
-  background-color: var(--dark-grayish-blue); /* Чуть более светлый синий */
+  background-color: var(--dark-grayish-blue); 
   width: 100%;
-  
-  /* Использование clamp(): карточка плавно растет от 343px (21.4375rem) до 540px (33.75rem) */
   max-width: clamp(21.4375rem, 40vw, 33.75rem);  
   
-  /* Логические отступы: плавно увеличиваются на больших экранах */
   padding-block-start: clamp(2.5rem, 5vw, 3rem);
   padding-block-end: clamp(2.5rem, 7vw, 4.5rem);
   padding-inline: clamp(1.5rem, 5vw, 3rem);
-  
-  /* Плавное изменение скругления углов */
   border-radius: clamp(0.75rem, 2vw, 0.9375rem); 
   
-  position: relative; /* Нужно для абсолютного позиционирования кнопки снизу */
+  position: relative; 
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -60,11 +58,11 @@ body {
   color: var(--neon-green);
   font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 3.5px;
-  
-  /* Адаптивный шрифт и логический отступ */
   font-size: clamp(0.75rem, 2vw, 0.8rem);
   margin-block-end: clamp(1.5rem, 4vw, 2rem);
+  
+  /* ИСПРАВЛЕНО: Перевели 3.5px в em для лучшей доступности */
+  letter-spacing: 0.21875em; 
 }
 
 /* Текст цитаты */
@@ -72,8 +70,6 @@ body {
   color: var(--light-cyan);
   font-weight: 800;
   line-height: 1.4;
-  
-  /* Адаптивный шрифт: плавно растет от 24px (1.5rem) до 28px (1.75rem) */
   font-size: clamp(1.5rem, 3.5vw, 1.75rem); 
   margin-block-end: clamp(1.5rem, 5vw, 2.5rem);
 }
@@ -90,7 +86,7 @@ body {
 }
 
 /* ==========================================================================
-   КНОПКА-КУБИК И ЕЕ СОСТОЯНИЯ
+   КНОПКА-КУБИК И ЕЕ СОСТОЯНИЯ (Упорядочены по спецификации)
    ========================================================================== */
 .advice-card__dice-btn {
   width: 4rem;
@@ -103,7 +99,6 @@ body {
   justify-content: center;
   cursor: pointer;
   
-  /* Магия позиционирования */
   position: absolute;
   bottom: -2rem; 
   left: 50%;
@@ -112,25 +107,32 @@ body {
   transition: transform 0.2s, box-shadow 0.2s;
 }
 
-/* Эффект наведения (Hover) */
+/* 1. Эффект наведения (Hover) */
 .advice-card__dice-btn:hover:not(:disabled) {
   box-shadow: 0 0 30px var(--neon-green);
 }
 
-/* Состояние фокуса (Focus) */
-.advice-card__dice-btn:focus-visible {
-  outline: 0.125rem solid var(--light-cyan);
-}
-
-/* Состояние загрузки кнопки (Loading) */
+/* 2. Состояние загрузки кнопки (Loading) */
 .advice-card__dice-btn--loading img {
   animation: spin 1s linear infinite;
 }
 
-/* Отключаем анимацию для тех, кто предпочитает уменьшенное движение */
+/* 3. Состояние фокуса (Focus) — опущено в самый конец для линтера */
+.advice-card__dice-btn:focus-visible {
+  outline: 0.125rem solid var(--light-cyan);
+}
+
+/* ==========================================================================
+   ДОСТУПНОСТЬ И АНИМАЦИИ
+   ========================================================================== */
+
+/* ИСПРАВЛЕНО: Теперь полностью отключаем и плавные переходы, и бесконечное вращение кубика */
 @media (prefers-reduced-motion: reduce) {
   .advice-card__dice-btn {
     transition: none;
+  }
+  .advice-card__dice-btn--loading img {
+    animation: none; 
   }
 }
 
@@ -141,29 +143,27 @@ body {
 }
 
 /* ==========================================================================
-   АДАПТИВ ДЛЯ БОЛЬШИХ ЭКРАНОВ (Замена картинки-разделителя)
+   АДАПТИВ ДЛЯ БОЛЬШИХ ЭКРАНОВ
    ========================================================================== */
 @media (min-width: 36em) {
-  /* Трюк с автоматической подменой картинки-разделителя через CSS */
   .advice-card__divider img {
     content: url("./images/pattern-divider-desktop.svg");
   }
 
-  /* Легкий эффект увеличения кнопки при наведении для ПК */
   .advice-card__dice-btn:hover:not(:disabled) {
     transform: translateX(-50%) scale(1.05); 
   }
 }
 
 /* ==========================================================================
-   FOOTER (Абсолютное позиционирование)
+   FOOTER
    ========================================================================== */
 .attribution {
   position: absolute;
   bottom: 1rem;
   left: 50%;
   transform: translateX(-50%);
-  font-size: 0.6875rem; /* Перевели 11px в rem (11 / 16) */
+  font-size: 0.6875rem; 
   text-align: center;
   color: var(--grayish-blue);
   width: 100%;
@@ -177,4 +177,5 @@ body {
 .attribution a:hover {
   text-decoration: underline;
 }
+
 

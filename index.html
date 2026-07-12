@@ -32,11 +32,13 @@
 
       <!-- :class говорит Vue динамически подставлять класс, если isLoading равен true -->
       <button
+        type="button"
+        aria-label="Generate new advice"
         :class="['advice-card__dice-btn', { 'advice-card__dice-btn--loading': isLoading }]"
         @click="fetchAdvice"
         :disabled="isLoading"
       >
-        <img src="./images/icon-dice.svg" alt="dice" />
+        <img src="./images/icon-dice.svg" alt="" aria-hidden="true" />
       </button>
     </main>
     <footer class="attribution">

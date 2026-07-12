@@ -30,15 +30,25 @@ body {
   padding: 1rem;
 }
 
-
-/* Контейнер карточки (стили для мобильных) */
+/* ==========================================================================
+   КОНТЕЙНЕР КАРТОЧКИ (Базовые адаптивные стили)
+   ========================================================================== */
 .advice-card {
   background-color: var(--dark-grayish-blue); /* Чуть более светлый синий */
   width: 100%;
-  max-width: 343px; /* Оптимальная ширина под экран мобильного (375px) */
-  padding: 2.5rem 1.5rem;
-  border-radius: 12px;
-  position: relative; /* Нужно, чтобы абсолютно спозиционировать кнопку снизу */
+  
+  /* Использование clamp(): карточка плавно растет от 343px (21.4375rem) до 540px (33.75rem) */
+  max-width: clamp(21.4375rem, 40vw, 33.75rem);  
+  
+  /* Логические отступы: плавно увеличиваются на больших экранах */
+  padding-block-start: clamp(2.5rem, 5vw, 3rem);
+  padding-block-end: clamp(2.5rem, 7vw, 4.5rem);
+  padding-inline: clamp(1.5rem, 5vw, 3rem);
+  
+  /* Плавное изменение скругления углов */
+  border-radius: clamp(0.75rem, 2vw, 0.9375rem); 
+  
+  position: relative; /* Нужно для абсолютного позиционирования кнопки снизу */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -48,26 +58,30 @@ body {
 /* Номер совета */
 .advice-card__id {
   color: var(--neon-green);
-  font-size: 0.75rem;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 3.5px;
-  margin-bottom: 1.5rem;
+  
+  /* Адаптивный шрифт и логический отступ */
+  font-size: clamp(0.75rem, 2vw, 0.8rem);
+  margin-block-end: clamp(1.5rem, 4vw, 2rem);
 }
 
 /* Текст цитаты */
 .advice-card__quote {
-  font-size: 1.5rem; /* Около 24px для мобилок, на десктопе сделаем 28px */
   color: var(--light-cyan);
   font-weight: 800;
   line-height: 1.4;
-  margin-bottom: 1.5rem;
+  
+  /* Адаптивный шрифт: плавно растет от 24px (1.5rem) до 28px (1.75rem) */
+  font-size: clamp(1.5rem, 3.5vw, 1.75rem); 
+  margin-block-end: clamp(1.5rem, 5vw, 2.5rem);
 }
 
 /* Полоса-разделитель */
 .advice-card__divider {
   width: 100%;
-  margin-bottom: 1rem; /* Оставляем место для свисающей кнопки */
+  margin-block-end: clamp(0rem, 3vw, 1rem); 
 }
 
 .advice-card__divider img {
@@ -75,7 +89,9 @@ body {
   height: auto;
 }
 
-/* Кнопка-кубик */
+/* ==========================================================================
+   КНОПКА-КУБИК И ЕЕ СОСТОЯНИЯ
+   ========================================================================== */
 .advice-card__dice-btn {
   width: 4rem;
   height: 4rem;
@@ -87,87 +103,67 @@ body {
   justify-content: center;
   cursor: pointer;
   
-  /* Магия позиционирования: опускаем кнопку на самый нижний край карточки */
+  /* Магия позиционирования */
   position: absolute;
-  bottom: -2rem; /* Сдвигаем вниз ровно на половину высоты кнопки (4rem / 2) */
+  bottom: -2rem; 
   left: 50%;
-  transform: translateX(-50%); /* Идеально центрируем по горизонтали */
+  transform: translateX(-50%); 
   
   transition: transform 0.2s, box-shadow 0.2s;
 }
 
-/* Эффект наведения (Hover) на кнопку — сделаем её неоново светящейся! */
+/* Эффект наведения (Hover) */
 .advice-card__dice-btn:hover:not(:disabled) {
   box-shadow: 0 0 30px var(--neon-green);
 }
 
-/* Дополнительно убираем стандартную обводку кнопок при фокусе */
+/* Состояние фокуса (Focus) */
 .advice-card__dice-btn:focus-visible {
-  outline: 2px solid var(--light-cyan);
+  outline: 0.125rem solid var(--light-cyan);
 }
 
-/* 1. Описываем чистое вращение картинки вокруг своей оси на 360 градусов */
-@keyframes spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-/* 2. Запускаем анимацию СТРОГО для картинки-иконки внутри загружающейся кнопки */
+/* Состояние загрузки кнопки (Loading) */
 .advice-card__dice-btn--loading img {
   animation: spin 1s linear infinite;
 }
 
+/* Отключаем анимацию для тех, кто предпочитает уменьшенное движение */
+@media (prefers-reduced-motion: reduce) {
+  .advice-card__dice-btn {
+    transition: none;
+  }
+}
 
+/* Анимация вращения кубика */
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
 
 /* ==========================================================================
-   АДАПТИВ ДЛЯ БОЛЬШИХ ЭКРАНОВ (Десктопы от 576px и выше)
+   АДАПТИВ ДЛЯ БОЛЬШИХ ЭКРАНОВ (Замена картинки-разделителя)
    ========================================================================== */
-@media (min-width: 576px) {
-  
-  .advice-card {
-    max-width: 540px; /* Увеличиваем ширину карточки для ПК */
-    padding: 3rem 3rem 4.5rem 3rem; /* Делаем просторные внутренние отступы */
-    border-radius: 15px; /* Чуть сильнее скругляем углы */
-  }
-
-  .advice-card__id {
-    font-size: 0.8rem;
-    margin-bottom: 2rem;
-  }
-
-  .advice-card__quote {
-    font-size: 28px; /* Точный размер из style-guide.md */
-    margin-bottom: 2.5rem;
-  }
-
-  .advice-card__divider {
-    margin-bottom: 0; /* Убираем лишний нижний отступ */
-  }
-
+@media (min-width: 36em) {
   /* Трюк с автоматической подменой картинки-разделителя через CSS */
   .advice-card__divider img {
     content: url("./images/pattern-divider-desktop.svg");
   }
 
-  /* Добавим легкий эффект увеличения кнопки при наведении для ПК */
+  /* Легкий эффект увеличения кнопки при наведении для ПК */
   .advice-card__dice-btn:hover:not(:disabled) {
-    transform: translateX(-50%) scale(1.05); /* Кнопка чуть увеличивается и сохраняет центрирование */
+    transform: translateX(-50%) scale(1.05); 
   }
 }
 
-
-/* footer */
-    
-    .attribution {
+/* ==========================================================================
+   FOOTER (Абсолютное позиционирование)
+   ========================================================================== */
+.attribution {
   position: absolute;
   bottom: 1rem;
   left: 50%;
   transform: translateX(-50%);
-  font-size: 11px;
+  font-size: 0.6875rem; /* Перевели 11px в rem (11 / 16) */
   text-align: center;
   color: var(--grayish-blue);
   width: 100%;
@@ -181,3 +177,4 @@ body {
 .attribution a:hover {
   text-decoration: underline;
 }
+

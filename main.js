@@ -1,5 +1,5 @@
-// 1. Извлекаем нужные инструменты из глобального объекта Vue
-const { createApp, ref, onMounted } = Vue;
+// Добавляем слово window. перед Vue, чтобы линтер понял, откуда взялась переменная
+const { createApp, ref, onMounted } = window.Vue;
 createApp({
   setup() {
     // 2. Создаем реактивное состояние (переменные для экрана)

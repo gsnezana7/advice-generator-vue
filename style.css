@@ -2,7 +2,6 @@
 @import url('https://googleapis.com');
 
 :root {
-  /* Цвета из дизайн-гайда */
   --light-cyan: hsl(193, 38%, 86%);
   --neon-green: hsl(150, 100%, 66%);
   --grayish-blue: hsl(217, 19%, 38%);
@@ -81,7 +80,7 @@ body {
 }
 
 /* ==========================================================================
-   КНОПКА-КУБИК И ЕЕ СОСТОЯНИЯ (Переставили фокус выше ховера)
+   КНОПКА-КУБИК И ЕЕ СОСТОЯНИЯ
    ========================================================================== */
 .advice-card__dice-btn {
   width: 4rem;
@@ -99,20 +98,36 @@ body {
   left: 50%;
   transform: translateX(-50%); 
   
-  transition: transform 0.2s, box-shadow 0.2s;
+  /* Добавили трансформацию масштаба в transition */
+  transition: transform 0.2s, box-shadow 0.2s, scale 0.1s;
 }
 
-/* 1. Сначала идет более простой псевдокласс фокуса (1 класс + 1 псевдокласс) */
+/* Отменяем дефолтный outline браузера */
+.advice-card__dice-btn:focus {
+  outline: none;
+}
+
+/* Красивый, доступный фокус с отступом для клавиши Tab */
 .advice-card__dice-btn:focus-visible {
-  outline: 0.125rem solid var(--light-cyan);
+  outline: 3px dashed var(--neon-green);
+  outline-offset: 0.375rem;
 }
 
-/* 2. Затем идет более сложный и специфичный ховер из-за отрицания :not() */
 .advice-card__dice-btn:hover:not(:disabled) {
   box-shadow: 0 0 30px var(--neon-green);
 }
 
-/* 3. Затем состояние загрузки со вложенным тегом img */
+/* Эффект тактильного нажатия, не ломающий центрирование по X */
+.advice-card__dice-btn:active:not(:disabled) {
+  scale: 0.95;
+}
+
+/* Стиль для заблокированной кнопки во время загрузки цитаты */
+.advice-card__dice-btn:disabled {
+  background-color: var(--grayish-blue);
+  cursor: not-allowed;
+}
+
 .advice-card__dice-btn--loading img {
   animation: spin 1s linear infinite;
 }
@@ -143,7 +158,6 @@ body {
     content: url("./images/pattern-divider-desktop.svg");
   }
   
-  /* ИСПРАВЛЕНО: Удалили отсюда повторный ховер кнопки, так как масштаб scale(1.05) теперь плавно обрабатывается clamp-ом самой карточки */
 }
 
 /* ==========================================================================
@@ -158,7 +172,6 @@ body {
   color: var(--grayish-blue);
   width: 100%;
   
-  /* ИСПРАВЛЕНО: Заменили 0.6875rem на адаптивный clamp */
   font-size: clamp(0.6875rem, 1.5vw, 0.75rem); 
 }
 

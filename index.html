@@ -19,18 +19,14 @@
   <body>
     <!-- Точка входа для Vue -->
     <main id="app" class="advice-card">
-      <!-- Сюда Vue подставит id совета -->
       <p class="advice-card__id">ADVICE #{{ adviceId }}</p>
 
-      <!-- Сюда Vue подставит текст совета -->
       <h1 class="advice-card__quote">“{{ adviceText }}”</h1>
 
-      <!-- Картинка-разделитель из архива -->
       <div class="advice-card__divider">
         <img src="./images/pattern-divider-desktop.svg" alt="divider" />
       </div>
 
-      <!-- :class говорит Vue динамически подставлять класс, если isLoading равен true -->
       <button
         type="button"
         aria-label="Generate new advice"

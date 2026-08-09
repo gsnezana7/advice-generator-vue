@@ -18,7 +18,7 @@ createApp({
         // Превращаем сырой ответ в удобный JS-объект
         const data = await response.json();
 
-        // Раскладываем полученные данные в наши реактивные переменные
+        // Раскладываем полученные данные в  реактивные переменные
         // Сервер возвращает объект в виде { slip: { id: 117, advice: "..." } }
         adviceId.value = data.slip.id;
         adviceText.value = data.slip.advice;

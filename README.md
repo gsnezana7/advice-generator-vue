@@ -1,91 +1,16 @@
-# Frontend Mentor - Advice generator app solution
+# Генератор случайных советов (Advice Generator App)
 
-This is a solution to the [Advice generator app challenge on Frontend Mentor](https://www.frontendmentor.io/challenges/advice-generator-app-QdUG-13db). Frontend Mentor challenges help you improve your coding skills by building realistic projects.
+Асинхронное одностраничное веб-приложение (SPA), разработанное на фреймворке Vue 3 с интеграцией внешнего REST API и полной поддержкой инклюзивной доступности.
 
-## Table of contents
+## 🛠️ Стек технологий и архитектура
 
-- [Overview](#overview)
-  - [The challenge](#the-challenge)
-  - [Links](#links)
-- [My process](#my-process)
-  - [Built with](#built-with)
-  - [What I learned](#what-i-learned)
-  - [Continued development](#continued-development)
-  - [AI Collaboration](#ai-collaboration)
-- [Author](#author)
+- **Логика и реактивность:** Vue 3 (Composition API) — использование глобального билда, реактивных состояний (`ref`) и хуков жизненного цикла (`onMounted`).
+- **Асинхронное взаимодействие:** Fetch API и синтаксис `async/await` для безопасного обмена данными с удаленным сервером в реальном времени.
+- **Верстка и БЭМ:** Семантический HTML5 и CSS3. Стилизация выполнена строго по методологии БЭМ, обеспечивая независимость и масштабируемость компонентов интерфейса.
 
-## Overview
+## 💡 Технические особенности и фичи
 
-### The challenge
-
-Users should be able to:
-
-- View the optimal layout for the app depending on their device's screen size
-- See hover states for all interactive elements on the page
-- Generate a new piece of advice by clicking the dice icon
-
-### Links
-
-- Solution URL: [GitHub Repository](https://github.com/gsnezana7/advice-generator-vue)
-- Live Site URL: [GitHub Pages Demo](https://gsnezana7.github.io/advice-generator-vue/)
-
-## My process
-
-### Built with
-
-- Semantic HTML5 markup
-- CSS custom properties & variables
-- Flexbox
-- Mobile-first workflow
-- Modern CSS Nesting
-- [Vue 3](https://vuejs.org) - JS Framework (Composition API via CDN)
-- Fetch API & Async/Await
-
-### What I learned
-
-During this challenge, I learned how to integrate Vue 3 into a project using a CDN link and manage the application state effectively without complex build tools. I also practiced working with asynchronous requests and handling API caching.
-
-I am proud of this approach to dynamic image swapping directly in modern CSS based on screen resolution:
-
-```css
-@media (min-width: 576px) {
-  .advice-card__divider img {
-    content: url("./images/pattern-divider-desktop.svg");
-  }
-}
-```
-
-And this clean implementation of an async data fetch in Vue 3 that handles the loading animation trigger:
-
-```js
-const fetchAdvice = async () => {
-  isLoading.value = true;
-  try {
-    const response = await fetch("https://adviceslip.com" + Date.now());
-    const data = await response.json();
-    adviceId.value = data.slip.id;
-    adviceText.value = data.slip.advice;
-  } catch (error) {
-    adviceText.value = "Oops! Something went wrong...";
-  } finally {
-    isLoading.value = false;
-  }
-};
-```
-
-### Continued development
-
-In future projects, I want to focus more on advanced Vue 3 concepts, state management, and transitioning from CDN implementation to professional project bundling using Vite.
-
-### AI Collaboration
-
-I used an AI assistant as a collaborative peer and technical mentor during this project.
-
-- **Tools used:** AI Assistant.
-- **How it was used:** For code reviews, troubleshooting network request syntax bugs, and structuring the Vue 3 Composition API architecture.
-- **What worked well:** The AI was excellent at explaining complex concepts like `async/await` and reactive states using simple terms and practical metaphors.
-
-## Author
-
-- GitHub - [Snezana](https://github.com/gsnezana7/)
-- Frontend Mentor - [@gsnezana7](https://www.frontendmentor.io/solutions/advice-generator-app-using-vue-3-and-fetch-R8uQoeg_Tf)
+1. **Обход агрессивного кэширования браузера:** Внедрен алгоритм динамической модификации URL запроса (`?t=${Date.now()}`). Это гарантирует, что при каждом клике на кнопку пользователь гарантированно получает свежие данные с сервера, минуя старый кэш браузера.
+2. **Отказоустойчивость интерфейса (UX/UI):** Реализован сквозной перехват ошибок (`try/catch/finally`). В случае обрыва интернет-соединения или сбоя на стороне API, приложение не "падает", а выводит вежливое и понятное уведомление для пользователя.
+3. **Защита от дребезга контактов (Debounce/Loading state):** На время выполнения асинхронного запроса кнопка генерации автоматически блокируется (`:disabled`), а интерфейс плавно переходит в состояние загрузки, предотвращая дублирующие запросы (спам-клики) к серверу.
+4. **Безупречная доступность (a11y):** Интерактивные элементы полностью адаптированы под управление с клавиатуры (клавишей `Tab`) и снабжены понятными атрибутами `aria-label` для корректного озвучивания экранными дикторами.
